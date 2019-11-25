@@ -1,1 +1,5 @@
-console.log("Anna Juice Ltd");
+const main = function(args) {
+  validateAndCall(args);
+};
+
+main(process.argv.slice(2));
