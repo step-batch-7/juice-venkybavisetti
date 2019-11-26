@@ -33,9 +33,13 @@ describe("performAction", function() {
       writeFile,
       timeStamp
     );
-    const expected =
-      "Transaction Recorded:\nEmployee Id,Beverage,Quantity,Date\n123,org,9,2019-11-20T05:50:28.267Z";
-    assert.strictEqual(actual, expected);
+    const expected = {
+      "Employee Id": 123,
+      Beverage: "org",
+      Date: "2019-11-20T05:50:28.267Z",
+      Quantity: 9
+    };
+    assert.deepStrictEqual(actual, expected);
   });
 
   it("should return query transactions details display", function() {
@@ -59,9 +63,15 @@ describe("performAction", function() {
       writeFile,
       timeStamp
     );
-    const expected =
-      "Employee Id,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z\nTotal Beverages: 4";
-    assert.strictEqual(actual, expected);
+    const expected = [
+      {
+        "Employee Id": 123,
+        Beverage: "org",
+        Date: "2019-11-20T05:50:28.267Z",
+        Quantity: 4
+      }
+    ];
+    assert.deepStrictEqual(actual, expected);
   });
 });
 
