@@ -1,37 +1,9 @@
 const assert = require("assert");
 const validateInput = require("../src/validateInputs");
 
-describe("isNumber", function() {
-  it("should validate numbers", function() {
-    assert.ok(validateInput.isNumber("2"));
-  });
-  it("should validate non numeric characters", function() {
-    assert.ok(!validateInput.isNumber("a"));
-    assert.ok(!validateInput.isNumber("@"));
-  });
-});
-
 describe("invalidInput", function() {
   it("should return false", function() {
     assert.ok(!validateInput.invalidInput());
-  });
-});
-
-describe("getIndexOfAction", function() {
-  it("should return index of --save", function() {
-    assert.strictEqual(validateInput.getIndexOfAction(["--save"]), 0);
-  });
-  it("should return index of --query", function() {
-    assert.strictEqual(validateInput.getIndexOfAction(["--query"]), 0);
-  });
-  it("should return -1 if both are exists", function() {
-    assert.strictEqual(
-      validateInput.getIndexOfAction(["--save", "--query"]),
-      -1
-    );
-  });
-  it("should return -1 if both doesn't exists", function() {
-    assert.strictEqual(validateInput.getIndexOfAction(["ss", "sss"]), -1);
   });
 });
 
