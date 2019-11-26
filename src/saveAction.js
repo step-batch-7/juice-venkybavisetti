@@ -6,38 +6,64 @@ const saveAction = function(
   writeFile,
   timeStamp
 ) {
-  let record = {};
-  if (exitsFile(path, "utf8")) {
-    const data = readFile(path, "utf8");
-    record = JSON.parse(data);
-  }
-  const recordKeys = Object.keys(record);
-  const empIdIndex = args.indexOf("--empId") + 1;
-  const empId = args[empIdIndex];
-  const newRecord = generateTransactionRecord(args, timeStamp);
-  if (recordKeys.includes(empId)) {
-    record[empId].push(newRecord);
-  } else {
-    record[empId] = [newRecord];
-  }
-  const tableColumns = Object.keys(newRecord);
-  const tableValues = Object.values(newRecord);
-  const recordString = JSON.stringify(record);
-  writeFile(path, recordString, "utf8");
-  return "Transaction Recorded:\n" + tableColumns + "\n" + tableValues;
+  let previousTransactionRecords = getPreviousTransactionRecords(
+    path,
+    readFile,
+    exitsFile
+  );
+  const newTransactionRecord = generateTransactionRecorded(args, timeStamp);
+  const updatedTransactionRecords = updatePreviousTransactionRecords(
+    args,
+    previousTransactionRecords,
+    newTransactionRecord
+  );
+  updateTransactionFile(path, writeFile, updatedTransactionRecords);
+  const headings = Object.keys(newTransactionRecord);
+  const fields = Object.values(newTransactionRecord);
+  return "Transaction Recorded:\n" + headings + "\n" + fields;
 };
 
-const generateTransactionRecord = function(input, timeStamp) {
-  const empIdIndex = input.indexOf("--empId") + 1;
-  const beverageIndex = input.indexOf("--beverage") + 1;
-  const qtyIndex = input.indexOf("--qty") + 1;
+const updatePreviousTransactionRecords = function(
+  args,
+  previousTransactionRecords,
+  newTransactionRecord
+) {
+  const recordKeys = Object.keys(previousTransactionRecords);
+  const empIdNumIndex = args.indexOf("--empId") + 1;
+  const empIdNum = args[empIdNumIndex];
+  if (recordKeys.includes(empIdNum)) {
+    previousTransactionRecords[empIdNum].push(newTransactionRecord);
+  } else {
+    previousTransactionRecords[empIdNum] = [newTransactionRecord];
+  }
+  return previousTransactionRecords;
+};
+
+const updateTransactionFile = function(path, writeFile, transactionRecords) {
+  const recordString = JSON.stringify(transactionRecords);
+  writeFile(path, recordString, "utf8");
+};
+
+const getPreviousTransactionRecords = function(path, readFile, exitsFile) {
+  let transactionRecords = {};
+  if (exitsFile(path, "utf8")) {
+    const data = readFile(path, "utf8");
+    transactionRecords = JSON.parse(data);
+  }
+  return transactionRecords;
+};
+
+const generateTransactionRecorded = function(input, timeStamp) {
+  const indexOfEmpIdNum = input.indexOf("--empId") + 1;
+  const indexOfBeverageJuice = input.indexOf("--beverage") + 1;
+  const indexOfQtyNum = input.indexOf("--qty") + 1;
   return {
-    "Employee Id": +input[empIdIndex],
-    Beverage: input[beverageIndex],
-    Quantity: +input[qtyIndex],
+    "Employee Id": +input[indexOfEmpIdNum],
+    Beverage: input[indexOfBeverageJuice],
+    Quantity: +input[indexOfQtyNum],
     Date: timeStamp()
   };
 };
 
 exports.saveAction = saveAction;
-exports.generateTransactionRecord = generateTransactionRecord;
+exports.generateTransactionRecorded = generateTransactionRecorded;
