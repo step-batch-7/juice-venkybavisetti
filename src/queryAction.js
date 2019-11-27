@@ -1,7 +1,7 @@
 const getEmpTransactions = function(args, previousTransactionRecords) {
   const indexOfEmpIdNum = args.indexOf("--empId") + 1;
-  const employeeID = args[indexOfEmpIdNum];
-  return previousTransactionRecords[employeeID];
+  const empIdNum = args[indexOfEmpIdNum];
+  return previousTransactionRecords[empIdNum];
 };
 
 const getPreviousTransactionRecords = function(path, readFile) {
