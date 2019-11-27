@@ -8,10 +8,10 @@ describe("performAction", function() {
     it("should add totalBeverages and Quantity in the objects", function() {
       const totalBeverages = 1;
       const obj = {
-        "Employee Id": 123,
-        Beverage: "org",
-        Quantity: 4,
-        Date: "2019-11-20T05:50:28.267Z"
+        empId: 123,
+        beverage: "org",
+        qty: 4,
+        date: "2019-11-20T05:50:28.267Z"
       };
       const actual = performAction.reducerForBeverages(totalBeverages, obj);
       const expected = 5;
@@ -23,10 +23,10 @@ describe("performAction", function() {
     it("should return total count of beverages when one transaction took place", function() {
       const empTransactions = [
         {
-          "Employee Id": 123,
-          Beverage: "org",
-          Quantity: 4,
-          Date: "2019-11-20T05:50:28.267Z"
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
         }
       ];
       const actual = performAction.getTotalBeverages(empTransactions);
@@ -37,16 +37,16 @@ describe("performAction", function() {
     it("should return total count of beverages when two transaction took place", function() {
       const empTransactions = [
         {
-          "Employee Id": 123,
-          Beverage: "org",
-          Quantity: 4,
-          Date: "2019-11-20T05:50:28.267Z"
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
         },
         {
-          "Employee Id": 123,
-          Beverage: "org",
-          Quantity: 4,
-          Date: "2019-11-20T05:50:28.267Z"
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
         }
       ];
       const actual = performAction.getTotalBeverages(empTransactions);
@@ -59,17 +59,17 @@ describe("performAction", function() {
     it("should return generated string msg from queryTransaction object", function() {
       const newTransactionRecord = [
         {
-          "Employee Id": 123,
-          Beverage: "org",
-          Quantity: 4,
-          Date: "2019-11-20T05:50:28.267Z"
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
         }
       ];
       const actual = performAction.generateQueryTransactionMsg(
         newTransactionRecord
       );
       const expected =
-        "Employee Id,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z\nTotal Beverages: 4";
+        "Employee ID, Beverage, Quantity, Date\n123,org,4,2019-11-20T05:50:28.267Z\nTotal Beverages: 4";
       assert.strictEqual(actual, expected);
     });
   });
@@ -77,16 +77,16 @@ describe("performAction", function() {
   describe("generateSavedTransactionMsg", function() {
     it("should return generated string msg from savedTransaction object", function() {
       const newTransactionRecord = {
-        "Employee Id": 123,
-        Beverage: "org",
-        Quantity: 4,
-        Date: "2019-11-20T05:50:28.267Z"
+        empId: 123,
+        beverage: "org",
+        qty: 4,
+        date: "2019-11-20T05:50:28.267Z"
       };
       const actual = performAction.generateSavedTransactionMsg(
         newTransactionRecord
       );
       const expected =
-        "Transaction Recorded:\nEmployee Id,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
+        "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
       assert.strictEqual(actual, expected);
     });
   });
@@ -95,14 +95,14 @@ describe("performAction", function() {
     it("should convert savedObject into required string", function() {
       const args = ["--save", "--empId", "123"];
       const dataInObjects = {
-        "Employee Id": 123,
-        Beverage: "org",
-        Quantity: 4,
-        Date: "2019-11-20T05:50:28.267Z"
+        empId: 123,
+        beverage: "org",
+        qty: 4,
+        date: "2019-11-20T05:50:28.267Z"
       };
 
       const expected =
-        "Transaction Recorded:\nEmployee Id,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
+        "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
 
       const actual = performAction.convertIntoMsg(args, dataInObjects);
       assert.strictEqual(actual, expected);
@@ -112,14 +112,14 @@ describe("performAction", function() {
       const args = ["--query", "--empId", "123"];
       const dataInObjects = [
         {
-          "Employee Id": 123,
-          Beverage: "org",
-          Quantity: 4,
-          Date: "2019-11-20T05:50:28.267Z"
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
         }
       ];
       const expected =
-        "Employee Id,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z\nTotal Beverages: 4";
+        "Employee ID, Beverage, Quantity, Date\n123,org,4,2019-11-20T05:50:28.267Z\nTotal Beverages: 4";
 
       const actual = performAction.convertIntoMsg(args, dataInObjects);
       assert.strictEqual(actual, expected);
@@ -132,7 +132,7 @@ describe("performAction", function() {
       const readFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
-        return '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]}';
+        return '{"123":[{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"}]}';
       };
       const args = [
         "--save",
@@ -152,7 +152,7 @@ describe("performAction", function() {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(
           recordString,
-          '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"},{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]}'
+          '{"123":[{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"},{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"}]}'
         );
         assert.strictEqual(fileType, "utf8");
       };
@@ -168,10 +168,10 @@ describe("performAction", function() {
         timeStamp
       );
       const expected = {
-        "Employee Id": 123,
-        Beverage: "org",
-        Date: "2019-11-20T05:50:28.267Z",
-        Quantity: 4
+        empId: 123,
+        beverage: "org",
+        date: "2019-11-20T05:50:28.267Z",
+        qty: 4
       };
       assert.deepStrictEqual(actual, expected);
     });
@@ -227,7 +227,7 @@ describe("performAction", function() {
       const readFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
-        return '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]}';
+        return '{"123":[{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"}]}';
       };
       const args = [
         "--save",
@@ -247,7 +247,7 @@ describe("performAction", function() {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(
           recordString,
-          '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"},{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]}'
+          '{"123":[{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"},{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"}]}'
         );
         assert.strictEqual(fileType, "utf8");
       };
@@ -263,7 +263,7 @@ describe("performAction", function() {
         timeStamp
       );
       const expected =
-        "Transaction Recorded:\nEmployee Id,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
+        "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
       assert.strictEqual(actual, expected);
     });
 

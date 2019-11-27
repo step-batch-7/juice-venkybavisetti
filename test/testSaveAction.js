@@ -121,10 +121,10 @@ describe("saveAction", function() {
       };
       const actual = saveAction.generateTransactionRecord(args, timeStamp);
       const expected = {
-        "Employee Id": 123,
-        Beverage: "org",
-        Quantity: 9,
-        Date: "2019-11-20T05:50:28.267Z"
+        empId: 123,
+        beverage: "org",
+        qty: 9,
+        date: "2019-11-20T05:50:28.267Z"
       };
       assert.deepStrictEqual(actual, expected);
     });
@@ -187,7 +187,7 @@ describe("saveAction", function() {
       const readFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
-        return '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":9,"Date":"2019-11-20T05:50:28.267Z"}]}';
+        return '{"123":[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]}';
       };
       const args = [
         "--save",
@@ -207,7 +207,7 @@ describe("saveAction", function() {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(
           recordString,
-          '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":9,"Date":"2019-11-20T05:50:28.267Z"},{"Employee Id":123,"Beverage":"org","Quantity":9,"Date":"2019-11-20T05:50:28.267Z"}]}'
+          '{"123":[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"},{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]}'
         );
         assert.strictEqual(fileType, "utf8");
       };
@@ -224,10 +224,10 @@ describe("saveAction", function() {
         timeStamp
       );
       const expected = {
-        "Employee Id": 123,
-        Beverage: "org",
-        Quantity: 9,
-        Date: "2019-11-20T05:50:28.267Z"
+        empId: 123,
+        beverage: "org",
+        qty: 9,
+        date: "2019-11-20T05:50:28.267Z"
       };
       assert.deepStrictEqual(actual, expected);
     });

@@ -5,7 +5,7 @@ const saveAction = require("./saveAction.js").saveAction;
 const queryAction = require("./queryAction.js").queryAction;
 
 const reducerForBeverages = function(totalBeverages, obj) {
-  return totalBeverages + parseInt(obj["Quantity"]);
+  return totalBeverages + parseInt(obj["qty"]);
 };
 
 const getTotalBeverages = function(empTransactions) {
@@ -14,7 +14,7 @@ const getTotalBeverages = function(empTransactions) {
 
 const generateQueryTransactionMsg = function(empTransactions) {
   const totalBeverages = getTotalBeverages(empTransactions);
-  const headings = Object.keys(empTransactions[0]);
+  const headings = "Employee ID, Beverage, Quantity, Date";
   const fields = empTransactions.map(function(obj) {
     return Object.values(obj);
   });
@@ -24,7 +24,7 @@ const generateQueryTransactionMsg = function(empTransactions) {
 };
 
 const generateSavedTransactionMsg = function(newTransactionRecord) {
-  const headings = Object.keys(newTransactionRecord);
+  const headings = "Employee ID,Beverage,Quantity,Date";
   const fields = Object.values(newTransactionRecord);
   return "Transaction Recorded:\n" + headings + "\n" + fields;
 };
