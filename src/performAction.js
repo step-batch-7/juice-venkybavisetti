@@ -12,7 +12,7 @@ const getTotalBeverages = function(empTransactions) {
   return empTransactions.reduce(reducerForBeverages, 0);
 };
 
-const getQueryTransactionMsg = function(empTransactions) {
+const generateQueryTransactionMsg = function(empTransactions) {
   const totalBeverages = getTotalBeverages(empTransactions);
   const headings = Object.keys(empTransactions[0]);
   const fields = empTransactions.map(function(obj) {
@@ -23,7 +23,7 @@ const getQueryTransactionMsg = function(empTransactions) {
   );
 };
 
-const getSavedTransactionMsg = function(newTransactionRecord) {
+const generateSavedTransactionMsg = function(newTransactionRecord) {
   const headings = Object.keys(newTransactionRecord);
   const fields = Object.values(newTransactionRecord);
   return "Transaction Recorded:\n" + headings + "\n" + fields;
@@ -31,8 +31,8 @@ const getSavedTransactionMsg = function(newTransactionRecord) {
 
 const convertIntoMsg = function(args, dataInObjects) {
   const actions = {
-    "--save": getSavedTransactionMsg,
-    "--query": getQueryTransactionMsg
+    "--save": generateSavedTransactionMsg,
+    "--query": generateQueryTransactionMsg
   };
   const indexOfAction = utilities.getIndexOfAction(args);
   return actions[args[indexOfAction]](dataInObjects);
@@ -84,7 +84,7 @@ const message = function(
 exports.message = message;
 exports.performAction = performAction;
 exports.convertIntoMsg = convertIntoMsg;
-exports.getSavedTransactionMsg = getSavedTransactionMsg;
-exports.getQueryTransactionMsg = getQueryTransactionMsg;
+exports.generateSavedTransactionMsg = generateSavedTransactionMsg;
+exports.generateQueryTransactionMsg = generateQueryTransactionMsg;
 exports.getTotalBeverages = getTotalBeverages;
 exports.reducerForBeverages = reducerForBeverages;
