@@ -19,14 +19,14 @@ const updatePreviousTransactionRecords = function(
   return previousTransactionRecords;
 };
 
-const generateTransactionRecorded = function(input, timeStamp) {
-  const indexOfEmpIdNum = input.indexOf("--empId") + 1;
-  const indexOfBeverageJuice = input.indexOf("--beverage") + 1;
-  const indexOfQtyNum = input.indexOf("--qty") + 1;
+const generateTransactionRecord = function(args, timeStamp) {
+  const indexOfEmpIdNum = args.indexOf("--empId") + 1;
+  const indexOfBeverageJuice = args.indexOf("--beverage") + 1;
+  const indexOfQtyNum = args.indexOf("--qty") + 1;
   return {
-    "Employee Id": +input[indexOfEmpIdNum],
-    Beverage: input[indexOfBeverageJuice],
-    Quantity: +input[indexOfQtyNum],
+    "Employee Id": +args[indexOfEmpIdNum],
+    Beverage: args[indexOfBeverageJuice],
+    Quantity: +args[indexOfQtyNum],
     Date: timeStamp()
   };
 };
@@ -53,7 +53,7 @@ const saveAction = function(
     readFile,
     exitsFile
   );
-  const newTransactionRecord = generateTransactionRecorded(args, timeStamp);
+  const newTransactionRecord = generateTransactionRecord(args, timeStamp);
   const updatedTransactionRecords = updatePreviousTransactionRecords(
     args,
     previousTransactionRecords,
@@ -64,6 +64,7 @@ const saveAction = function(
 };
 
 exports.saveAction = saveAction;
-exports.generateTransactionRecorded = generateTransactionRecorded;
+exports.getPreviousTransactionRecords = getPreviousTransactionRecords;
+exports.generateTransactionRecord = generateTransactionRecord;
 exports.updatePreviousTransactionRecords = updatePreviousTransactionRecords;
 exports.updateTransactionFile = updateTransactionFile;
