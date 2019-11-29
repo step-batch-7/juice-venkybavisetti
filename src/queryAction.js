@@ -1,7 +1,10 @@
 const getEmpTransactions = function(args, previousTransactionRecords) {
   const indexOfEmpIdNum = args.indexOf("--empId") + 1;
   const empIdNum = args[indexOfEmpIdNum];
-  return previousTransactionRecords[empIdNum];
+  empTxn = previousTransactionRecords.filter(function(obj) {
+    return obj.empId == empIdNum;
+  });
+  return empTxn;
 };
 
 const getPreviousTransactionRecords = function(path, readFile) {

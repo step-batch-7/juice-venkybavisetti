@@ -4,18 +4,10 @@ const updateTransactionFile = function(path, writeFile, transactionRecords) {
 };
 
 const updatePreviousTransactionRecords = function(
-  args,
   previousTransactionRecords,
   newTransactionRecord
 ) {
-  const recordKeys = Object.keys(previousTransactionRecords);
-  const empIdNumIndex = args.indexOf("--empId") + 1;
-  const empIdNum = args[empIdNumIndex];
-  if (recordKeys.includes(empIdNum)) {
-    previousTransactionRecords[empIdNum].push(newTransactionRecord);
-  } else {
-    previousTransactionRecords[empIdNum] = [newTransactionRecord];
-  }
+  previousTransactionRecords.push(newTransactionRecord);
   return previousTransactionRecords;
 };
 
@@ -32,7 +24,7 @@ const generateTransactionRecord = function(args, timeStamp) {
 };
 
 const getPreviousTransactionRecords = function(path, readFile, exitsFile) {
-  let transactionRecords = {};
+  let transactionRecords = [];
   if (exitsFile(path, "utf8")) {
     const data = readFile(path, "utf8");
     transactionRecords = JSON.parse(data);
@@ -55,7 +47,6 @@ const saveAction = function(
   );
   const newTransactionRecord = generateTransactionRecord(args, timeStamp);
   const updatedTransactionRecords = updatePreviousTransactionRecords(
-    args,
     previousTransactionRecords,
     newTransactionRecord
   );

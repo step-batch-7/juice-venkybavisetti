@@ -1,5 +1,6 @@
 const utilities = require("../src/utilities.js");
-const assert = require("assert");
+const chai = require("chai");
+const assert = chai.assert;
 
 describe("utilities", function() {
   describe("isNumber", function() {

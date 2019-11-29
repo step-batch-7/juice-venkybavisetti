@@ -1,30 +1,26 @@
-const assert = require("assert");
-const fs = require("fs");
+const chai = require("chai");
+const assert = chai.assert;
 const saveAction = require("../src/saveAction.js");
 
 describe("saveAction", function() {
   describe("updatePreviousTransactionRecords", function() {
     it("should return updated transaction when previousTransaction is empty", function() {
-      const args = ["--empId", "123"];
-      const previousTransactionRecords = {};
+      const previousTransactionRecords = [];
       const newTransactionRecord = {
         "Employee Id": "123",
         Beverage: "org",
         Quantity: "4",
         Date: "2019-11-20T05:50:28.267Z"
       };
-      const expected = {
-        "123": [
-          {
-            "Employee Id": "123",
-            Beverage: "org",
-            Quantity: "4",
-            Date: "2019-11-20T05:50:28.267Z"
-          }
-        ]
-      };
+      const expected = [
+        {
+          "Employee Id": "123",
+          Beverage: "org",
+          Quantity: "4",
+          Date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
       const actual = saveAction.updatePreviousTransactionRecords(
-        args,
         previousTransactionRecords,
         newTransactionRecord
       );
@@ -32,41 +28,35 @@ describe("saveAction", function() {
     });
 
     it("should return updated transaction when empId exists in previousTransaction", function() {
-      const args = ["--empId", "123"];
-      const previousTransactionRecords = {
-        "123": [
-          {
-            "Employee Id": 123,
-            Beverage: "org",
-            Quantity: 4,
-            Date: "2019-11-20T05:50:28.267Z"
-          }
-        ]
-      };
+      const previousTransactionRecords = [
+        {
+          "Employee Id": 123,
+          Beverage: "org",
+          Quantity: 4,
+          Date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
       const newTransactionRecord = {
         "Employee Id": 123,
         Beverage: "org",
         Quantity: 4,
         Date: "2019-11-20T05:50:28.267Z"
       };
-      const expected = {
-        "123": [
-          {
-            "Employee Id": 123,
-            Beverage: "org",
-            Quantity: 4,
-            Date: "2019-11-20T05:50:28.267Z"
-          },
-          {
-            "Employee Id": 123,
-            Beverage: "org",
-            Quantity: 4,
-            Date: "2019-11-20T05:50:28.267Z"
-          }
-        ]
-      };
+      const expected = [
+        {
+          "Employee Id": 123,
+          Beverage: "org",
+          Quantity: 4,
+          Date: "2019-11-20T05:50:28.267Z"
+        },
+        {
+          "Employee Id": 123,
+          Beverage: "org",
+          Quantity: 4,
+          Date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
       const actual = saveAction.updatePreviousTransactionRecords(
-        args,
         previousTransactionRecords,
         newTransactionRecord
       );
@@ -130,13 +120,13 @@ describe("saveAction", function() {
     });
   });
 
-  describe("getPreviousT", function() {
+  describe("getPreviousTransactionRecords", function() {
     it("should read file when file exists", function() {
       const path = "./somePath";
       const readFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
-        return '{"123":[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]}';
+        return '[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]';
       };
       const exitsFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
@@ -148,16 +138,14 @@ describe("saveAction", function() {
         readFile,
         exitsFile
       );
-      const expected = {
-        "123": [
-          {
-            "Employee Id": 123,
-            Beverage: "org",
-            Quantity: 4,
-            Date: "2019-11-20T05:50:28.267Z"
-          }
-        ]
-      };
+      const expected = [
+        {
+          "Employee Id": 123,
+          Beverage: "org",
+          Quantity: 4,
+          Date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
       assert.deepStrictEqual(actual, expected);
     });
 
@@ -176,7 +164,7 @@ describe("saveAction", function() {
         readFile,
         exitsFile
       );
-      const expected = {};
+      const expected = [];
       assert.deepStrictEqual(actual, expected);
     });
   });
@@ -187,7 +175,7 @@ describe("saveAction", function() {
       const readFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
-        return '{"123":[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]}';
+        return '[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]';
       };
       const args = [
         "--save",
@@ -207,7 +195,7 @@ describe("saveAction", function() {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(
           recordString,
-          '{"123":[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"},{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]}'
+          '[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"},{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]'
         );
         assert.strictEqual(fileType, "utf8");
       };

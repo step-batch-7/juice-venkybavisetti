@@ -2,3 +2,5 @@ node_modules/
 .nyc_output/processinfo/index.json
 .nyc_output/
 coverage/
+dataFiles/
+failures.txt

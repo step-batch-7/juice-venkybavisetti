@@ -1,5 +1,7 @@
-const assert = require("assert");
+const chai = require("chai");
+const assert = chai.assert;
 const validateInput = require("../src/validateInputs");
+
 describe("validateInputs", function() {
   describe("invalidInput", function() {
     it("should return false", function() {

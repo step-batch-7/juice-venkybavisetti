@@ -1,26 +1,30 @@
-const fs = require("fs");
 const validateInput = require("./validateInputs.js");
 const utilities = require("./utilities.js");
 const saveAction = require("./saveAction.js").saveAction;
 const queryAction = require("./queryAction.js").queryAction;
 
 const reducerForBeverages = function(totalBeverages, obj) {
-  return totalBeverages + parseInt(obj["qty"]);
+  return totalBeverages + parseInt(obj.qty);
 };
 
 const getTotalBeverages = function(empTransactions) {
   return empTransactions.reduce(reducerForBeverages, 0);
 };
 
+const toRow = function(transaction) {
+  return [
+    transaction.empId,
+    transaction.beverage,
+    transaction.qty,
+    transaction.date
+  ].join(",");
+};
+
 const generateQueryTransactionMsg = function(empTransactions) {
   const totalBeverages = getTotalBeverages(empTransactions);
-  const headings = "Employee ID, Beverage, Quantity, Date";
-  const fields = empTransactions.map(function(obj) {
-    return Object.values(obj);
-  });
-  return (
-    headings + "\n" + fields.join("\n") + "\nTotal Beverages: " + totalBeverages
-  );
+  const heading = "Employee ID, Beverage, Quantity, Date";
+  const rows = empTransactions.map(toRow);
+  return [heading, ...rows, `Total: ${totalBeverages} Juices`].join("\n");
 };
 
 const generateSavedTransactionMsg = function(newTransactionRecord) {

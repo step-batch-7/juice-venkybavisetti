@@ -4,7 +4,9 @@ const fs = require("fs");
 
 const main = function() {
   const args = process.argv.slice(2);
-  const path = "./src/transactionsData.json";
+  const path =
+    process.env.JUICE_TRANSACTIONS_STORE_PATH ||
+    "./dataFiles/transactionsData.json";
   const timeStamp = utilities.timeStamp;
   const readFile = fs.readFileSync;
   const exitsFile = fs.existsSync;

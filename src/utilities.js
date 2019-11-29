@@ -3,7 +3,7 @@ const isNumber = function(num) {
 };
 
 const timeStamp = function() {
-  return new Date().toJSON();
+  return process.env.NOW || new Date().toJSON();
 };
 
 const getIndexOfAction = function(args) {
