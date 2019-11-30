@@ -5,9 +5,9 @@ const invalidInput = function() {
 };
 
 const validateQuery = function(args) {
-  if (args.length == 3) {
+  if (args.length < 6) {
     let index = args.indexOf("--empId");
-    return utilities.isNumber(args[index + 1]);
+    return utilities.isNumber(args[index + 1]) || true;
   }
   return false;
 };

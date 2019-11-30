@@ -3,6 +3,66 @@ const assert = chai.assert;
 const queryAction = require("../src/queryAction");
 
 describe("queryAction", function() {
+  describe("filterReqTxn", function() {
+    it("should filter reqMatcher in the txnRexords", function() {
+      const reqMatcher = ["empId", "123"];
+      const txnRecords = [
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-29T05:50:28.267Z"
+        },
+        {
+          empId: 25317,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
+      const actual = queryAction.filterReqTxns(reqMatcher, txnRecords);
+      const expected = [
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-29T05:50:28.267Z"
+        }
+      ];
+      assert.deepStrictEqual(actual, expected);
+    });
+  });
+
+  describe("dateOfTransactions", function() {
+    it("should filter date in the transactions", function() {
+      const args = ["--date", "2019-11-20"];
+      const empTransactions = [
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-29T05:50:28.267Z"
+        },
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
+      const actual = queryAction.getDateOfTransactions(args, empTransactions);
+      const expected = [
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
+      assert.deepStrictEqual(actual, expected);
+    });
+  });
+
   describe("getEmpTransactions", function() {
     it("should return emp transactions in previousTransactionRecords", function() {
       const args = ["--empId", "123"];
