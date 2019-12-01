@@ -9,9 +9,9 @@ runTest() {
   cmp output.txt expected.txt > /dev/null
   if [ $? -eq 0 ]
   then
-    result="✅"
+    result="🟢"
   else
-    result="❌"
+    result="🔴"
     echo "---------$test----------" >> failures.txt
     echo "\t\t\t<= command =>\n$command" >> failures.txt
     echo "\n\t\t\t<= actual output =>" >> failures.txt

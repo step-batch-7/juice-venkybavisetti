@@ -18,9 +18,9 @@ const helpMsg = function() {
   return "please enter valid input";
 };
 
-const getPreviousTransactionRecords = function(path, readFile, exitsFile) {
+const getPreviousTransactionRecords = function(path, readFile, existsFile) {
   let transactionRecords = [];
-  if (exitsFile(path, "utf8")) {
+  if (existsFile(path, "utf8")) {
     const data = readFile(path, "utf8");
     transactionRecords = JSON.parse(data);
   }

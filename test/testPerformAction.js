@@ -165,7 +165,7 @@ describe("performAction", function() {
         "--qty",
         "4"
       ];
-      const exitsFile = function(path, fileType) {
+      const existsFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
         return true;
@@ -181,14 +181,15 @@ describe("performAction", function() {
       const timeStamp = function() {
         return "2019-11-20T05:50:28.267Z";
       };
-      const actual = performAction.performAction(
-        path,
-        readFile,
-        args,
-        exitsFile,
-        writeFile,
-        timeStamp
-      );
+      const parameters = {
+        args: args,
+        path: path,
+        existsFile: existsFile,
+        readFile: readFile,
+        writeFile: writeFile,
+        timeStamp: timeStamp
+      };
+      const actual = performAction.performAction(parameters);
       const expected = {
         empId: 123,
         beverage: "org",
@@ -206,7 +207,7 @@ describe("performAction", function() {
         return '[{"empId":123,"beverage":"org","qty":4,"date":"2019-11-20T05:50:28.267Z"}]';
       };
       const args = ["--query", "--empId", "123"];
-      const exitsFile = function(path, fileType) {
+      const existsFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
         return true;
@@ -222,15 +223,15 @@ describe("performAction", function() {
       const timeStamp = function() {
         return "2019-11-20T05:50:28.267Z";
       };
-
-      const actual = performAction.performAction(
-        path,
-        readFile,
-        args,
-        exitsFile,
-        writeFile,
-        timeStamp
-      );
+      const parameters = {
+        args: args,
+        path: path,
+        existsFile: existsFile,
+        readFile: readFile,
+        writeFile: writeFile,
+        timeStamp: timeStamp
+      };
+      const actual = performAction.performAction(parameters);
       const expected = [
         {
           empId: 123,
@@ -260,7 +261,7 @@ describe("performAction", function() {
         "--qty",
         "4"
       ];
-      const exitsFile = function(path, fileType) {
+      const existsFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
         return true;
@@ -276,14 +277,15 @@ describe("performAction", function() {
       const timeStamp = function() {
         return new Date("2019-11-20T05:50:28.267Z");
       };
-      const actual = performAction.message(
-        path,
-        readFile,
-        args,
-        exitsFile,
-        writeFile,
-        timeStamp
-      );
+      const parameters = {
+        args: args,
+        path: path,
+        existsFile: existsFile,
+        readFile: readFile,
+        writeFile: writeFile,
+        timeStamp: timeStamp
+      };
+      const actual = performAction.message(parameters);
       const expected =
         "Transaction Recorded:\nEmployee ID,Beverage,Quantity,Date\n123,org,4,2019-11-20T05:50:28.267Z";
       assert.strictEqual(actual, expected);
@@ -305,7 +307,7 @@ describe("performAction", function() {
         "--qty",
         "4"
       ];
-      const exitsFile = function(path, fileType) {
+      const existsFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
         return true;
@@ -321,14 +323,15 @@ describe("performAction", function() {
       const timeStamp = function() {
         return "2019-11-20T05:50:28.267Z";
       };
-      const actual = performAction.message(
-        path,
-        readFile,
-        args,
-        exitsFile,
-        writeFile,
-        timeStamp
-      );
+      const parameters = {
+        args: args,
+        path: path,
+        existsFile: existsFile,
+        readFile: readFile,
+        writeFile: writeFile,
+        timeStamp: timeStamp
+      };
+      const actual = performAction.message(parameters);
       const expected = utilities.helpMsg();
       assert.strictEqual(actual, expected);
     });

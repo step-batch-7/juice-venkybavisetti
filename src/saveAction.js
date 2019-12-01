@@ -25,18 +25,12 @@ const generateTransactionRecord = function(args, timeStamp) {
   };
 };
 
-const saveAction = function(
-  path,
-  readFile,
-  args,
-  exitsFile,
-  writeFile,
-  timeStamp
-) {
+const saveAction = function(parameters) {
+  const { path, existsFile, readFile, timeStamp, args, writeFile } = parameters;
   let previousTransactionRecords = utilities.getPreviousTransactionRecords(
     path,
     readFile,
-    exitsFile
+    existsFile
   );
   const newTransactionRecord = generateTransactionRecord(args, timeStamp);
   const updatedTransactionRecords = updatePreviousTransactionRecords(

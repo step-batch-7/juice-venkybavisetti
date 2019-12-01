@@ -132,8 +132,14 @@ describe("queryAction", function() {
         return '[{"empId":123,"beverage":"org","qty":9,"date":"2019-11-20T05:50:28.267Z"}]';
       };
       const args = ["--query", "--empId", "123"];
-      const exitsFile = () => true;
-      const actual = queryAction.queryAction(path, readFile, args, exitsFile);
+      const existsFile = () => true;
+      const parameters = {
+        args: args,
+        path: path,
+        existsFile: existsFile,
+        readFile: readFile
+      };
+      const actual = queryAction.queryAction(parameters);
       const expected = [
         {
           empId: 123,

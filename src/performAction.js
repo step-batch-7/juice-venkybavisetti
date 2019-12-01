@@ -29,7 +29,6 @@ const generateQueryTransactionMsg = function(empTransactions) {
 
 const generateSavedTransactionMsg = function(newTransactionRecord) {
   const headings = "Employee ID,Beverage,Quantity,Date";
-  console.log(newTransactionRecord.date);
   const fields = [
     newTransactionRecord.empId,
     newTransactionRecord.beverage,
@@ -48,45 +47,19 @@ const convertIntoMsg = function(args, dataInObjects) {
   return actions[args[indexOfAction]](dataInObjects);
 };
 
-const performAction = function(
-  path,
-  readFile,
-  args,
-  exitsFile,
-  writeFile,
-  timeStamp
-) {
+const performAction = function(parameters) {
+  const { args } = parameters;
   const actions = { "--save": saveAction, "--query": queryAction };
   const indexOfAction = utilities.getIndexOfAction(args);
-  return actions[args[indexOfAction]](
-    path,
-    readFile,
-    args,
-    exitsFile,
-    writeFile,
-    timeStamp
-  );
+  return actions[args[indexOfAction]](parameters);
 };
 
-const message = function(
-  path,
-  readFile,
-  args,
-  exitsFile,
-  writeFile,
-  timeStamp
-) {
+const message = function(parameters) {
+  const { args } = parameters;
   if (!validateInput.isValidInput(args)) {
     return utilities.helpMsg();
   }
-  dataInObjects = performAction(
-    path,
-    readFile,
-    args,
-    exitsFile,
-    writeFile,
-    timeStamp
-  );
+  dataInObjects = performAction(parameters);
   const convertedMsg = convertIntoMsg(args, dataInObjects);
   return convertedMsg;
 };

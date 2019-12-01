@@ -6,17 +6,18 @@ const main = function() {
   const args = process.argv.slice(2);
   const path = getDataStorePath(process.env);
   const readFile = fs.readFileSync;
-  const exitsFile = fs.existsSync;
+  const existsFile = fs.existsSync;
   const writeFile = fs.writeFileSync;
   const timeStampWithEnv = timeStamp.bind(null, process.env);
-  const displayMsg = performAction.message(
-    path,
-    readFile,
-    args,
-    exitsFile,
-    writeFile,
-    timeStampWithEnv
-  );
+  const parameters = {
+    args: args,
+    path: path,
+    existsFile: existsFile,
+    readFile: readFile,
+    writeFile: writeFile,
+    timeStamp: timeStampWithEnv
+  };
+  const displayMsg = performAction.message(parameters);
   console.log(displayMsg);
 };
 

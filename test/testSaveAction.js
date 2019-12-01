@@ -137,7 +137,7 @@ describe("saveAction", function() {
         "--qty",
         "9"
       ];
-      const exitsFile = function(path, fileType) {
+      const existsFile = function(path, fileType) {
         assert.strictEqual(path, "./somePath");
         assert.strictEqual(fileType, "utf8");
         return true;
@@ -153,15 +153,15 @@ describe("saveAction", function() {
       const timeStamp = function() {
         return "2019-11-20T05:50:28.267Z";
       };
-
-      const actual = saveAction.saveAction(
-        path,
-        readFile,
-        args,
-        exitsFile,
-        writeFile,
-        timeStamp
-      );
+      const parameters = {
+        args: args,
+        path: path,
+        existsFile: existsFile,
+        readFile: readFile,
+        writeFile: writeFile,
+        timeStamp: timeStamp
+      };
+      const actual = saveAction.saveAction(parameters);
       const expected = {
         empId: 123,
         beverage: "org",

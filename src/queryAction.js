@@ -34,11 +34,12 @@ const filterReqTxns = function(reqMatcher, txnRecords) {
   return filteredTxns;
 };
 
-const queryAction = function(path, readFile, args, writeFile) {
+const queryAction = function(parameters) {
+  const { path, existsFile, readFile, args } = parameters;
   const previousTransactionRecords = utilities.getPreviousTransactionRecords(
     path,
     readFile,
-    writeFile
+    existsFile
   );
   const empTransactions = getEmpTransactions(args, previousTransactionRecords);
   const dateOfTransactions = getDateOfTransactions(args, empTransactions);
