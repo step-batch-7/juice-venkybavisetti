@@ -18,7 +18,17 @@ const helpMsg = function() {
   return "please enter valid input";
 };
 
+const getPreviousTransactionRecords = function(path, readFile, exitsFile) {
+  let transactionRecords = [];
+  if (exitsFile(path, "utf8")) {
+    const data = readFile(path, "utf8");
+    transactionRecords = JSON.parse(data);
+  }
+  return transactionRecords;
+};
+
 exports.isNumber = isNumber;
 exports.timeStamp = timeStamp;
 exports.helpMsg = helpMsg;
 exports.getIndexOfAction = getIndexOfAction;
+exports.getPreviousTransactionRecords = getPreviousTransactionRecords;

@@ -120,55 +120,6 @@ describe("saveAction", function() {
     });
   });
 
-  describe("getPreviousTransactionRecords", function() {
-    it("should read file when file exists", function() {
-      const path = "./somePath";
-      const readFile = function(path, fileType) {
-        assert.strictEqual(path, "./somePath");
-        assert.strictEqual(fileType, "utf8");
-        return '[{"Employee Id":123,"Beverage":"org","Quantity":4,"Date":"2019-11-20T05:50:28.267Z"}]';
-      };
-      const exitsFile = function(path, fileType) {
-        assert.strictEqual(path, "./somePath");
-        assert.strictEqual(fileType, "utf8");
-        return true;
-      };
-      const actual = saveAction.getPreviousTransactionRecords(
-        path,
-        readFile,
-        exitsFile
-      );
-      const expected = [
-        {
-          "Employee Id": 123,
-          Beverage: "org",
-          Quantity: 4,
-          Date: "2019-11-20T05:50:28.267Z"
-        }
-      ];
-      assert.deepStrictEqual(actual, expected);
-    });
-
-    it("should not read file when file not exists", function() {
-      const path = "./somePath";
-      const readFile = function(path, fileType) {
-        return "";
-      };
-      const exitsFile = function(path, fileType) {
-        assert.strictEqual(path, "./somePath");
-        assert.strictEqual(fileType, "utf8");
-        return false;
-      };
-      const actual = saveAction.getPreviousTransactionRecords(
-        path,
-        readFile,
-        exitsFile
-      );
-      const expected = [];
-      assert.deepStrictEqual(actual, expected);
-    });
-  });
-
   describe("saveAction", function() {
     it("should return recorded transaction in object", function() {
       const path = "./somePath";

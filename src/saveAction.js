@@ -1,3 +1,5 @@
+const utilities = require("./utilities");
+
 const updateTransactionFile = function(path, writeFile, transactionRecords) {
   const recordString = JSON.stringify(transactionRecords);
   writeFile(path, recordString, "utf8");
@@ -23,15 +25,6 @@ const generateTransactionRecord = function(args, timeStamp) {
   };
 };
 
-const getPreviousTransactionRecords = function(path, readFile, exitsFile) {
-  let transactionRecords = [];
-  if (exitsFile(path, "utf8")) {
-    const data = readFile(path, "utf8");
-    transactionRecords = JSON.parse(data);
-  }
-  return transactionRecords;
-};
-
 const saveAction = function(
   path,
   readFile,
@@ -40,7 +33,7 @@ const saveAction = function(
   writeFile,
   timeStamp
 ) {
-  let previousTransactionRecords = getPreviousTransactionRecords(
+  let previousTransactionRecords = utilities.getPreviousTransactionRecords(
     path,
     readFile,
     exitsFile
@@ -55,7 +48,6 @@ const saveAction = function(
 };
 
 exports.saveAction = saveAction;
-exports.getPreviousTransactionRecords = getPreviousTransactionRecords;
 exports.generateTransactionRecord = generateTransactionRecord;
 exports.updatePreviousTransactionRecords = updatePreviousTransactionRecords;
 exports.updateTransactionFile = updateTransactionFile;

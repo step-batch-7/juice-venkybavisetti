@@ -1,3 +1,14 @@
+const utilities = require("./utilities");
+
+const getBeverageTransactions = function(args, dateOfTransactions) {
+  if (!args.includes("--beverage")) return dateOfTransactions;
+  const indxOfBvgValue = args.indexOf("--beverage") + 1;
+  const bvgValue = args[indxOfBvgValue];
+  let bvgDetails = ["beverage"];
+  bvgDetails.push(bvgValue);
+  return filterReqTxns(bvgDetails, dateOfTransactions);
+};
+
 const getDateOfTransactions = function(args, empTransactions) {
   if (!args.includes("--date")) return empTransactions;
   const indexOfDateNum = args.indexOf("--date") + 1;
@@ -23,24 +34,23 @@ const filterReqTxns = function(reqMatcher, txnRecords) {
   return filteredTxns;
 };
 
-const getPreviousTransactionRecords = function(path, readFile) {
-  const data = readFile(path, "utf8");
-  transactionRecords = JSON.parse(data);
-  return transactionRecords;
-};
-
-const queryAction = function(path, readFile, args) {
-  const previousTransactionRecords = getPreviousTransactionRecords(
+const queryAction = function(path, readFile, args, writeFile) {
+  const previousTransactionRecords = utilities.getPreviousTransactionRecords(
     path,
-    readFile
+    readFile,
+    writeFile
   );
   const empTransactions = getEmpTransactions(args, previousTransactionRecords);
   const dateOfTransactions = getDateOfTransactions(args, empTransactions);
-  return dateOfTransactions;
+  const beverageTransactions = getBeverageTransactions(
+    args,
+    dateOfTransactions
+  );
+  return beverageTransactions;
 };
 
 exports.queryAction = queryAction;
-exports.getPreviousTransactionRecords = getPreviousTransactionRecords;
 exports.getEmpTransactions = getEmpTransactions;
 exports.getDateOfTransactions = getDateOfTransactions;
 exports.filterReqTxns = filterReqTxns;
+exports.getBeverageTransactions = getBeverageTransactions;

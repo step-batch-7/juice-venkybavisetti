@@ -102,7 +102,7 @@ describe("performAction", function() {
         empId: 123,
         beverage: "org",
         qty: 4,
-        date: "2019-11-20T05:50:28.267Z"
+        date: new Date("2019-11-20T05:50:28.267Z")
       };
       const actual = performAction.generateSavedTransactionMsg(
         newTransactionRecord
@@ -120,7 +120,7 @@ describe("performAction", function() {
         empId: 123,
         beverage: "org",
         qty: 4,
-        date: "2019-11-20T05:50:28.267Z"
+        date: new Date("2019-11-20T05:50:28.267Z")
       };
 
       const expected =
@@ -274,7 +274,7 @@ describe("performAction", function() {
         assert.strictEqual(fileType, "utf8");
       };
       const timeStamp = function() {
-        return "2019-11-20T05:50:28.267Z";
+        return new Date("2019-11-20T05:50:28.267Z");
       };
       const actual = performAction.message(
         path,

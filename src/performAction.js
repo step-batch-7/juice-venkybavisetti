@@ -29,7 +29,13 @@ const generateQueryTransactionMsg = function(empTransactions) {
 
 const generateSavedTransactionMsg = function(newTransactionRecord) {
   const headings = "Employee ID,Beverage,Quantity,Date";
-  const fields = Object.values(newTransactionRecord);
+  console.log(newTransactionRecord.date);
+  const fields = [
+    newTransactionRecord.empId,
+    newTransactionRecord.beverage,
+    newTransactionRecord.qty,
+    newTransactionRecord.date.toJSON()
+  ];
   return "Transaction Recorded:\n" + headings + "\n" + fields;
 };
 
