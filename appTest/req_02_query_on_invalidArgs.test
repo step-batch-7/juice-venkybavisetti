@@ -1,0 +1,2 @@
+(export NOW="2019-11-28T12:00:00.000Z"; export JUICE_TRANSACTIONS_STORE_PATH="./appTests/preset_for_save.json"; node beverage.js --save --empId Orange)
+please enter valid input

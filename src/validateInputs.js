@@ -4,12 +4,54 @@ const invalidInput = function() {
   return false;
 };
 
-const validateQuery = function(args) {
-  if (args.length < 8) {
-    let index = args.indexOf("--empId");
-    return utilities.isNumber(args[index + 1]) || true;
+const getQuerryArgsPaired = function(args) {
+  extractPairedArgs = args.reduce(reducer, [[]]);
+  return extractPairedArgs;
+};
+
+const reducer = function(context, element) {
+  const indexOfLastArray = context.length - 1;
+  const lengthOfLastArray = context.slice(-1)[0].length;
+  if (2 == lengthOfLastArray) {
+    context.push([element]);
+    return context;
   }
-  return false;
+  context[indexOfLastArray].push(element);
+  return context;
+};
+
+const validateEmpId = function(id) {
+  return utilities.isNumber(id);
+};
+
+const validateDate = function(date) {
+  const dateInNum = date.split("-");
+  return dateInNum.every(utilities.isNumber);
+};
+
+const validateBeverage = function(beverage) {
+  const splitedBeverage = beverage.split("");
+  return splitedBeverage.every(element => element.match(/[a-z]/i));
+};
+
+const predicate = function(element) {
+  let result = false;
+  const key = element[0];
+  const value = element[1];
+  const validater = {
+    "--empId": validateEmpId,
+    "--date": validateDate,
+    "--beverage": validateBeverage
+  };
+  if (["--empId", "--date", "--beverage"].includes(key)) {
+    result = validater[key](value);
+  }
+  return result;
+};
+
+const validateQuery = function(args) {
+  queryPairedArgs = getQuerryArgsPaired(args.slice(1));
+  return queryPairedArgs.every(predicate);
 };
 
 const validateSave = function(args) {
@@ -29,8 +71,9 @@ const isValidInput = function(args) {
     "--query": validateQuery,
     undefined: invalidInput
   };
-  const index = utilities.getIndexOfAction(args);
-  return validateAction[args[index]](args);
+  const indexOfAction = utilities.getIndexOfAction(args);
+  const saveOrQuery = args[indexOfAction];
+  return validateAction[saveOrQuery](args);
 };
 
 exports.isValidInput = isValidInput;

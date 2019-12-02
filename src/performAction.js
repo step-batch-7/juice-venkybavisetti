@@ -24,8 +24,23 @@ const generateQueryTransactionMsg = function(empTransactions) {
   const totalBeverages = getTotalBeverages(empTransactions);
   const heading = "Employee ID, Beverage, Quantity, Date";
   const rows = empTransactions.map(toRow);
-  return [heading, ...rows, `Total: ${totalBeverages} Juices`].join("\n");
+  const juice = totalBeverages != 1 ? "Juices" : "Juice";
+  return [heading, ...rows, `Total: ${totalBeverages} ${juice}`].join("\n");
 };
+
+// const toRowLine = function(transaction) {
+//   const fieldNames = "empId,beverage,qty,date".split(",");
+//   const values = fieldNames.map(name => transaction[name]);
+//   return values.join(",");
+// };
+
+// const generateQueryTransactionMsg = function(transactions) {
+//   const totalBeverages = getTotalBeverages(transactions);
+//   const header = "Employee ID, Beverage, Quantity, Date";
+//   const footer = `Total: ${totalBeverages} Juices`;
+//   const rowLines = transactions.map(toRowLine);
+//   return [header, ...rowLines, footer].join("\n");
+// };
 
 const generateSavedTransactionMsg = function(newTransactionRecord) {
   const headings = "Employee ID,Beverage,Quantity,Date";
@@ -51,7 +66,8 @@ const performAction = function(parameters) {
   const { args } = parameters;
   const actions = { "--save": saveAction, "--query": queryAction };
   const indexOfAction = utilities.getIndexOfAction(args);
-  return actions[args[indexOfAction]](parameters);
+  const saveOrQuery = args[indexOfAction];
+  return actions[saveOrQuery](parameters);
 };
 
 const message = function(parameters) {
