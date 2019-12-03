@@ -94,6 +94,22 @@ describe("performAction", function() {
         "Employee ID, Beverage, Quantity, Date\n123,org,4,2019-11-20T05:50:28.267Z\n123,org,4,2019-11-20T05:50:28.268Z\nTotal: 8 Juices";
       assert.strictEqual(actual, expected);
     });
+    it("should give a text representation of list of one transaction and one qty for testing juice", function() {
+      const newTransactionRecord = [
+        {
+          beverage: "org",
+          empId: 123,
+          qty: 1,
+          date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
+      const actual = performAction.generateQueryTransactionMsg(
+        newTransactionRecord
+      );
+      const expected =
+        "Employee ID, Beverage, Quantity, Date\n123,org,1,2019-11-20T05:50:28.267Z\nTotal: 1 Juice";
+      assert.strictEqual(actual, expected);
+    });
   });
 
   describe("generateSavedTransactionMsg", function() {

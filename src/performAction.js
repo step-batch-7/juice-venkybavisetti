@@ -28,20 +28,6 @@ const generateQueryTransactionMsg = function(empTransactions) {
   return [heading, ...rows, `Total: ${totalBeverages} ${juice}`].join("\n");
 };
 
-// const toRowLine = function(transaction) {
-//   const fieldNames = "empId,beverage,qty,date".split(",");
-//   const values = fieldNames.map(name => transaction[name]);
-//   return values.join(",");
-// };
-
-// const generateQueryTransactionMsg = function(transactions) {
-//   const totalBeverages = getTotalBeverages(transactions);
-//   const header = "Employee ID, Beverage, Quantity, Date";
-//   const footer = `Total: ${totalBeverages} Juices`;
-//   const rowLines = transactions.map(toRowLine);
-//   return [header, ...rowLines, footer].join("\n");
-// };
-
 const generateSavedTransactionMsg = function(newTransactionRecord) {
   const headings = "Employee ID,Beverage,Quantity,Date";
   const fields = [

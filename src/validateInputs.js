@@ -5,11 +5,11 @@ const invalidInput = function() {
 };
 
 const getQuerryArgsPaired = function(args) {
-  extractPairedArgs = args.reduce(reducer, [[]]);
+  extractPairedArgs = args.reduce(reducerForPair, [[]]);
   return extractPairedArgs;
 };
 
-const reducer = function(context, element) {
+const reducerForPair = function(context, element) {
   const indexOfLastArray = context.length - 1;
   const lengthOfLastArray = context.slice(-1)[0].length;
   if (2 == lengthOfLastArray) {
@@ -34,7 +34,7 @@ const validateBeverage = function(beverage) {
   return splitedBeverage.every(element => element.match(/[a-z]/i));
 };
 
-const predicate = function(element) {
+const predicateForEvery = function(element) {
   let result = false;
   const key = element[0];
   const value = element[1];
@@ -51,7 +51,7 @@ const predicate = function(element) {
 
 const validateQuery = function(args) {
   queryPairedArgs = getQuerryArgsPaired(args.slice(1));
-  return queryPairedArgs.every(predicate);
+  return queryPairedArgs.every(predicateForEvery);
 };
 
 const validateSave = function(args) {
@@ -80,3 +80,9 @@ exports.isValidInput = isValidInput;
 exports.validateSave = validateSave;
 exports.validateQuery = validateQuery;
 exports.invalidInput = invalidInput;
+exports.predicateForEvery = predicateForEvery;
+exports.validateBeverage = validateBeverage;
+exports.validateDate = validateDate;
+exports.validateEmpId = validateEmpId;
+exports.getQuerryArgsPaired = getQuerryArgsPaired;
+exports.reducerForPair = reducerForPair;

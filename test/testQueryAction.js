@@ -121,6 +121,31 @@ describe("queryAction", function() {
       ];
       assert.deepStrictEqual(actual, expected);
     });
+
+    it("should return previousTransactionRecords when empId not given", function() {
+      const args = ["--beverage", "123"];
+      const previousTransactionRecords = [
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
+      const actual = queryAction.getEmpTransactions(
+        args,
+        previousTransactionRecords
+      );
+      const expected = [
+        {
+          empId: 123,
+          beverage: "org",
+          qty: 4,
+          date: "2019-11-20T05:50:28.267Z"
+        }
+      ];
+      assert.deepStrictEqual(actual, expected);
+    });
   });
 
   describe("queryAction", function() {
